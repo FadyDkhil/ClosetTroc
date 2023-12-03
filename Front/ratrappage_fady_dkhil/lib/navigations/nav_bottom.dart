@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:ratrappage_fady_dkhil/user/login.dart';
+import 'package:ratrappage_fady_dkhil/user/signup.dart';
 //import 'package:http/http.dart' as http;
-import 'dart:convert';
+// import 'dart:convert';
 //import '../user_provider.dart';
 //import 'package:provider/provider.dart';
 //import 'package:projet_camping_evenement/events/ShowEvents/events.dart';
@@ -18,11 +20,7 @@ class _NavBottomState extends State<NavBottom> {
   late String userID;
   late String nameOfUser = ""; // Variable to store the user name
 
-  final List<Widget> _interfaces = const [
-    // Events(),
-    // CampingMaterial(),
-    // Events()
-  ];
+  final List<Widget> _interfaces = const [LogIn(), SignUp(), LogIn()];
 
   @override
   void initState() {
@@ -63,13 +61,13 @@ class _NavBottomState extends State<NavBottom> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-            "Camping Project"), // Display the user name in the app bar title
+            "Closet Troc"), // Display the user name in the app bar title
       ),
       drawer: Drawer(
         child: Column(
           children: [
             AppBar(
-              title: Text(nameOfUser),
+              title: const Text("nameOfUser"),
               automaticallyImplyLeading: false,
             ),
             ListTile(
@@ -81,7 +79,7 @@ class _NavBottomState extends State<NavBottom> {
                 Text("Account Settings"),
               ]),
               onTap: () {
-                Navigator.pushNamed(context, "/settings");
+                //Navigator.pushNamed(context, "/settings");
               },
             ),
             ListTile(
@@ -93,7 +91,7 @@ class _NavBottomState extends State<NavBottom> {
                 Text("My Events"),
               ]),
               onTap: () {
-                Navigator.pushNamed(context, "/my_events");
+                //Navigator.pushNamed(context, "/my_events");
               },
             ),
             ListTile(
@@ -105,7 +103,7 @@ class _NavBottomState extends State<NavBottom> {
                 Text("Add Event"),
               ]),
               onTap: () {
-                Navigator.pushReplacementNamed(context, "/add_event");
+                //Navigator.pushReplacementNamed(context, "/add_event");
               },
             ),
             ListTile(
@@ -117,7 +115,7 @@ class _NavBottomState extends State<NavBottom> {
                 Text("Subscribed Events"),
               ]),
               onTap: () {
-                Navigator.pushNamed(context, "/events/followed");
+                //Navigator.pushNamed(context, "/events/followed");
               },
             ),
             ListTile(
@@ -129,7 +127,7 @@ class _NavBottomState extends State<NavBottom> {
                 Text("My Shop"),
               ]),
               onTap: () {
-                Navigator.pushNamed(context, "/my_shop");
+                //Navigator.pushNamed(context, "/my_shop");
               },
             ),
             ListTile(
@@ -141,7 +139,7 @@ class _NavBottomState extends State<NavBottom> {
                 Text("Sell"),
               ]),
               onTap: () {
-                Navigator.pushNamed(context, "/shop/add");
+                //Navigator.pushNamed(context, "/shop/add");
               },
             ),
             const ListTile(),

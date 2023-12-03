@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:ratrappage_fady_dkhil/navigations/nav_bottom.dart';
+import 'package:ratrappage_fady_dkhil/user/login.dart';
+import 'package:ratrappage_fady_dkhil/user/signup.dart';
 import "color_schemes.g.dart";
 
 void main() {
@@ -13,34 +16,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(useMaterial3: true, colorScheme: lightColorScheme),
-      darkTheme: ThemeData(useMaterial3: true, colorScheme: darkColorScheme),
-      home: const Home(),
+      //darkTheme: ThemeData(useMaterial3: true, colorScheme: darkColorScheme),
+      routes: {
+        "/": (BuildContext context) => const LogIn(),
+        "/home": (BuildContext context) => const NavBottom(),
+        "/signup": (BuildContext context) => const SignUp()
+      },
     );
-  }
-}
-
-class Home extends StatelessWidget {
-  const Home({Key? key}) : super(key: key);
-
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          elevation: 2,
-          title: Text("Material Theme Builder"),
-        ),
-        body: const Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                'Update with your UI',
-              ),
-            ],
-          ),
-        ),
-        floatingActionButton:
-            FloatingActionButton(onPressed: () => {}, tooltip: 'Increment'));
   }
 }
