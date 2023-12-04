@@ -88,46 +88,10 @@ class _NavBottomState extends State<NavBottom> {
                 SizedBox(
                   width: 10,
                 ),
-                Text("My Events"),
+                Text("My Products"),
               ]),
               onTap: () {
                 //Navigator.pushNamed(context, "/my_events");
-              },
-            ),
-            ListTile(
-              title: const Row(children: [
-                Icon(Icons.add_reaction),
-                SizedBox(
-                  width: 10,
-                ),
-                Text("Add Event"),
-              ]),
-              onTap: () {
-                //Navigator.pushReplacementNamed(context, "/add_event");
-              },
-            ),
-            ListTile(
-              title: const Row(children: [
-                Icon(Icons.follow_the_signs),
-                SizedBox(
-                  width: 10,
-                ),
-                Text("Subscribed Events"),
-              ]),
-              onTap: () {
-                //Navigator.pushNamed(context, "/events/followed");
-              },
-            ),
-            ListTile(
-              title: const Row(children: [
-                Icon(Icons.storefront_sharp),
-                SizedBox(
-                  width: 10,
-                ),
-                Text("My Shop"),
-              ]),
-              onTap: () {
-                //Navigator.pushNamed(context, "/my_shop");
               },
             ),
             ListTile(
@@ -136,7 +100,43 @@ class _NavBottomState extends State<NavBottom> {
                 SizedBox(
                   width: 10,
                 ),
-                Text("Sell"),
+                Text("Add Product"),
+              ]),
+              onTap: () {
+                Navigator.pushReplacementNamed(context, "/products/add");
+              },
+            ),
+            ListTile(
+              title: const Row(children: [
+                Icon(Icons.shopping_basket),
+                SizedBox(
+                  width: 10,
+                ),
+                Text("Bag"),
+              ]),
+              onTap: () {
+                //Navigator.pushNamed(context, "/events/followed");
+              },
+            ),
+            ListTile(
+              title: const Row(children: [
+                // Icon(Icons.storefront_sharp),
+                SizedBox(
+                  width: 10,
+                ),
+                Text(""),
+              ]),
+              onTap: () {
+                //Navigator.pushNamed(context, "/my_shop");
+              },
+            ),
+            ListTile(
+              title: const Row(children: [
+                // Icon(Icons.sell),
+                SizedBox(
+                  width: 10,
+                ),
+                // Text("Sell"),
               ]),
               onTap: () {
                 //Navigator.pushNamed(context, "/shop/add");

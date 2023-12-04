@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ratrappage_fady_dkhil/Shop/add_product.dart';
 import 'package:ratrappage_fady_dkhil/navigations/nav_bottom.dart';
 import 'package:ratrappage_fady_dkhil/user/login.dart';
 import 'package:ratrappage_fady_dkhil/user/signup.dart';
@@ -15,12 +16,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(useMaterial3: true, colorScheme: lightColorScheme),
+      theme: ThemeData(useMaterial3: true, colorScheme: themeDataTest),
       //darkTheme: ThemeData(useMaterial3: true, colorScheme: darkColorScheme),
       routes: {
         "/": (BuildContext context) => const LogIn(),
         "/home": (BuildContext context) => const NavBottom(),
-        "/signup": (BuildContext context) => const SignUp()
+        "/signup": (BuildContext context) => const SignUp(),
+        "/products/add": (BuildContext context) => const AddProduct()
       },
     );
   }

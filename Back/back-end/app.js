@@ -6,6 +6,7 @@ require('dotenv').config()
 
 
 //routes require
+const products = require('./routes/ProductsRoutes.js')
 const users = require('./routes/UsersRoutes.js')
 
 //middleware
@@ -14,6 +15,7 @@ app.use(express.static('./public'))
 app.use(express.json())
 
 //using routes
+app.use('/closettroc/products', products)
 app.use('/closettroc/users', users)
 
 
