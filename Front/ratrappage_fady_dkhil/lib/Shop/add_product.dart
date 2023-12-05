@@ -143,7 +143,6 @@ class _AddProductState extends State<AddProduct> {
             Container(
               margin: const EdgeInsets.fromLTRB(20, 0, 20, 20),
               child: TextFormField(
-                maxLines: 3,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: "Price",

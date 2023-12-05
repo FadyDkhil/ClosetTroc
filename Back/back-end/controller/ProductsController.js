@@ -3,8 +3,8 @@ const Products = require('../models/Products.js')
 const getAllProducts = async (req, res) => {
     try {
         let filter = {};
-        if (req.query.location) {
-            filter = { location: req.query.location };
+        if (req.query.type) {
+            filter = { type: req.query.type };
         } else if (req.query.name) {
             filter = { name: { $regex: new RegExp(req.query.name, 'i') } };
         }
@@ -28,7 +28,7 @@ const addOneProduct = async (req,res) => {
 const editOneProduct = async (req,res) => {
     try{
         const {id:productID} = req.params
-        const updatedProduct = await Event.findOneAndUpdate({_id: productID}, req.body,{ new: true, runValidators: true})
+        const updatedProduct = await Products.findOneAndUpdate({_id: productID}, req.body,{ new: true, runValidators: true})
         if(!updatedProduct){
             return res.status(404).json({msg: 'no Product with the ID: ${productID}'})
         }

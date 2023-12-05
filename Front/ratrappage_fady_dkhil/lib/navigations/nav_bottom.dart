@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:ratrappage_fady_dkhil/Bag/bag.dart';
+import 'package:ratrappage_fady_dkhil/Shop/Show/global/products.dart';
+import 'package:ratrappage_fady_dkhil/Shop/Show/user/my_products.dart';
 import 'package:ratrappage_fady_dkhil/user/login.dart';
 import 'package:ratrappage_fady_dkhil/user/signup.dart';
 //import 'package:http/http.dart' as http;
@@ -20,7 +23,7 @@ class _NavBottomState extends State<NavBottom> {
   late String userID;
   late String nameOfUser = ""; // Variable to store the user name
 
-  final List<Widget> _interfaces = const [LogIn(), SignUp(), LogIn()];
+  final List<Widget> _interfaces = const [Products(), Bag()];
 
   @override
   void initState() {
@@ -91,7 +94,7 @@ class _NavBottomState extends State<NavBottom> {
                 Text("My Products"),
               ]),
               onTap: () {
-                //Navigator.pushNamed(context, "/my_events");
+                Navigator.pushNamed(context, "/products/user");
               },
             ),
             ListTile(
@@ -106,48 +109,22 @@ class _NavBottomState extends State<NavBottom> {
                 Navigator.pushReplacementNamed(context, "/products/add");
               },
             ),
-            ListTile(
-              title: const Row(children: [
-                Icon(Icons.shopping_basket),
-                SizedBox(
-                  width: 10,
-                ),
-                Text("Bag"),
-              ]),
-              onTap: () {
-                //Navigator.pushNamed(context, "/events/followed");
-              },
+            // ListTile(
+            //   title: const Row(children: [
+            //     Icon(Icons.shopping_basket),
+            //     SizedBox(
+            //       width: 10,
+            //     ),
+            //     Text("Bag"),
+            //   ]),
+            //   onTap: () {
+            //     //Navigator.pushNamed(context, "/events/followed");
+            //   },
+            // ),
+            const SizedBox(
+              height: 450,
             ),
-            ListTile(
-              title: const Row(children: [
-                // Icon(Icons.storefront_sharp),
-                SizedBox(
-                  width: 10,
-                ),
-                Text(""),
-              ]),
-              onTap: () {
-                //Navigator.pushNamed(context, "/my_shop");
-              },
-            ),
-            ListTile(
-              title: const Row(children: [
-                // Icon(Icons.sell),
-                SizedBox(
-                  width: 10,
-                ),
-                // Text("Sell"),
-              ]),
-              onTap: () {
-                //Navigator.pushNamed(context, "/shop/add");
-              },
-            ),
-            const ListTile(),
-            const ListTile(),
-            const ListTile(),
-            const ListTile(),
-            const ListTile(),
-            const ListTile(),
+
             ListTile(
               title: const Row(children: [
                 Icon(Icons.logout),
@@ -167,17 +144,17 @@ class _NavBottomState extends State<NavBottom> {
       bottomNavigationBar: BottomNavigationBar(
         items: const [
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: "Events",
-          ),
-          BottomNavigationBarItem(
             icon: Icon(Icons.store),
-            label: "Shop",
+            label: "Products",
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.forum),
-            label: "Forum",
-          )
+            icon: Icon(Icons.shopping_basket),
+            label: "Bag",
+          ),
+          // BottomNavigationBarItem(
+          //   icon: Icon(Icons.forum),
+          //   label: "Forum",
+          // )
         ],
         currentIndex: _currentIndex,
         onTap: (int index) {

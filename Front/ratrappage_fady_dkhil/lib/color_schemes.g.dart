@@ -88,7 +88,7 @@ const themeDataTest = ColorScheme(
   onErrorContainer: Color(0xFF410002),
   background: Color(0xFFFDFBFF),
   onBackground: Color(0xFF001B3D),
-  surface: Color.fromARGB(255, 155, 221, 210),
+  surface: Color(0xFF6DD2FF),
   onSurface: Color(0xFF001B3D),
   surfaceVariant: Color(0xFFDCE3E9),
   onSurfaceVariant: Color(0xFF40484C),
