@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-// import 'package:provider/provider.dart';
+import 'package:provider/provider.dart';
 import 'dart:convert';
-// import '../../user_provider.dart';
+import '../../../user_provider.dart';
 
 class ProductsDetails extends StatefulWidget {
   final String _name;
@@ -28,10 +28,9 @@ class _ProductsDetailsState extends State<ProductsDetails> {
   void initState() {
     // _currentQuantity = widget._quantity;
     super.initState();
-    userID = "-1";
-    // WidgetsBinding.instance!.addPostFrameCallback((_) {
-    //   userID = Provider.of<UserProvider>(context, listen: false).userId ?? "-1";
-    // });
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
+      userID = Provider.of<UserProvider>(context, listen: false).userId ?? "-1";
+    });
   }
 
   @override

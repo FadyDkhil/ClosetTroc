@@ -33,9 +33,16 @@ class _SignUpState extends State<SignUp> {
       body: Form(
         key: _formKey,
         child: Column(children: [
-          const SizedBox(
-            height: 20,
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Image.asset(
+              'assets/logo.png', // Replace with your logo asset path
+              width: 200,
+              height: 150,
+              // Adjust width and height as needed
+            ),
           ),
+          const SizedBox(height: 20),
           Container(
             margin: const EdgeInsets.fromLTRB(20, 2, 20, 20),
             child: TextFormField(

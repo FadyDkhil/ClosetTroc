@@ -4,12 +4,10 @@ import 'package:ratrappage_fady_dkhil/Shop/Show/global/products.dart';
 import 'package:ratrappage_fady_dkhil/Shop/Show/user/my_products.dart';
 import 'package:ratrappage_fady_dkhil/user/login.dart';
 import 'package:ratrappage_fady_dkhil/user/signup.dart';
-//import 'package:http/http.dart' as http;
-// import 'dart:convert';
-//import '../user_provider.dart';
-//import 'package:provider/provider.dart';
-//import 'package:projet_camping_evenement/events/ShowEvents/events.dart';
-//import 'package:projet_camping_evenement/shop/CampingMaterial.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import '../user_provider.dart';
+import 'package:provider/provider.dart';
 
 class NavBottom extends StatefulWidget {
   const NavBottom({super.key});
@@ -28,36 +26,36 @@ class _NavBottomState extends State<NavBottom> {
   @override
   void initState() {
     super.initState();
-    // WidgetsBinding.instance!.addPostFrameCallback((_) async {
-    //   userID = Provider.of<UserProvider>(context, listen: false).userId ?? "-1";
+    WidgetsBinding.instance!.addPostFrameCallback((_) async {
+      userID = Provider.of<UserProvider>(context, listen: false).userId ?? "-1";
 
-    //   // Fetch the user name when the widget is initialized
-    //   await fetchUserName();
-    // });
+      // Fetch the user name when the widget is initialized
+      await fetchUserName();
+    });
   }
 
-  // Future<void> fetchUserName() async {
-  //   try {
-  //     final response =
-  //         await http.get(Uri.http("localhost:3000", "/fady/users/$userID"));
+  Future<void> fetchUserName() async {
+    try {
+      final response = await http
+          .get(Uri.http("localhost:3000", "/closettroc/users/$userID"));
 
-  //     if (response.statusCode == 200) {
-  //       final dynamic jsonResponse = json.decode(response.body);
+      if (response.statusCode == 200) {
+        final dynamic jsonResponse = json.decode(response.body);
 
-  //       if (jsonResponse is Map && jsonResponse.containsKey("userName")) {
-  //         setState(() {
-  //           nameOfUser = jsonResponse["userName"];
-  //         });
-  //       }
-  //     } else if (response.statusCode == 404) {
-  //       print("User not found");
-  //     } else {
-  //       print("Error fetching user name. Status code: ${response.statusCode}");
-  //     }
-  //   } catch (error) {
-  //     print("Error fetching user name: $error");
-  //   }
-  // }
+        if (jsonResponse is Map && jsonResponse.containsKey("userName")) {
+          setState(() {
+            nameOfUser = jsonResponse["userName"];
+          });
+        }
+      } else if (response.statusCode == 404) {
+        print("User not found");
+      } else {
+        print("Error fetching user name. Status code: ${response.statusCode}");
+      }
+    } catch (error) {
+      print("Error fetching user name: $error");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +68,7 @@ class _NavBottomState extends State<NavBottom> {
         child: Column(
           children: [
             AppBar(
-              title: const Text("nameOfUser"),
+              title: Text(nameOfUser),
               automaticallyImplyLeading: false,
             ),
             ListTile(
@@ -82,7 +80,7 @@ class _NavBottomState extends State<NavBottom> {
                 Text("Account Settings"),
               ]),
               onTap: () {
-                //Navigator.pushNamed(context, "/settings");
+                Navigator.pushNamed(context, "/settings");
               },
             ),
             ListTile(

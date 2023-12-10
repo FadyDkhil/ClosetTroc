@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-// import 'package:provider/provider.dart';
+import 'package:provider/provider.dart';
 import 'dart:convert';
-// import '../user_provider.dart';
-// import 'package:projet_camping_evenement/navigations/nav_bottom.dart';
+import '../user_provider.dart';
 
 class AddProduct extends StatefulWidget {
   const AddProduct({Key? key}) : super(key: key);
@@ -24,17 +23,15 @@ class _AddProductState extends State<AddProduct> {
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  DateTime? _selectedStartDate;
-  DateTime? _selectedEndDate;
+  // DateTime? _selectedStartDate;
+  // DateTime? _selectedEndDate;
 
   @override
   void initState() {
     super.initState();
-    userID = "-1";
-    // // Access context in initState by using a post-frame callback
-    // WidgetsBinding.instance!.addPostFrameCallback((_) {
-    //   userID = Provider.of<UserProvider>(context, listen: false).userId ?? "-1";
-    // });
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
+      userID = Provider.of<UserProvider>(context, listen: false).userId ?? "-1";
+    });
   }
 
   // Future<void> _selectStartDate(BuildContext context) async {

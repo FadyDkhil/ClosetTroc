@@ -70,7 +70,7 @@ const darkColorScheme = ColorScheme(
 
 const themeDataTest = ColorScheme(
   brightness: Brightness.light,
-  primary: Color(0xFF006685),
+  primary: Color.fromARGB(255, 204, 212, 214),
   onPrimary: Color(0xFFFFFFFF),
   primaryContainer: Color(0xFFBFE8FF),
   onPrimaryContainer: Color(0xFF001F2A),
@@ -78,7 +78,7 @@ const themeDataTest = ColorScheme(
   onSecondary: Color(0xFFFFFFFF),
   secondaryContainer: Color(0xFFCEE5FF),
   onSecondaryContainer: Color(0xFF001D33),
-  tertiary: Color(0xFF006590),
+  tertiary: Color.fromARGB(255, 136, 137, 137),
   onTertiary: Color(0xFFFFFFFF),
   tertiaryContainer: Color(0xFFC8E6FF),
   onTertiaryContainer: Color(0xFF001E2F),
@@ -88,7 +88,7 @@ const themeDataTest = ColorScheme(
   onErrorContainer: Color(0xFF410002),
   background: Color(0xFFFDFBFF),
   onBackground: Color(0xFF001B3D),
-  surface: Color(0xFF6DD2FF),
+  surface: Color(0xFF2e6770),
   onSurface: Color(0xFF001B3D),
   surfaceVariant: Color(0xFFDCE3E9),
   onSurfaceVariant: Color(0xFF40484C),

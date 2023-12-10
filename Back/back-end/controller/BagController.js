@@ -8,7 +8,7 @@ const getAllInBag = async (req, res) => {
         res.status(500).json({ msg: err });
     }
 }
-// }
+
 const addOneInBag = async (req,res) => {
     try{
         const bag = await Bag.create(req.body)

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-//import 'package:projet_camping_evenement/events/edit_event.dart';
 import 'package:http/http.dart' as http;
 import 'package:ratrappage_fady_dkhil/Shop/edit_product.dart';
 

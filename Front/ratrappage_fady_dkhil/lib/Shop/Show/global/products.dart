@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-//import 'package:projet_camping_evenement/events/ShowEvents/event_details.dart';
-//import 'package:projet_camping_evenement/events/ShowEvents/events_info.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-// import '../user_provider.dart';
-// import 'package:provider/provider.dart';
+import '../user_provider.dart';
+import 'package:provider/provider.dart';
 
 class EditProduct extends StatefulWidget {
   final String id;
@@ -27,11 +27,9 @@ class _EditProductState extends State<EditProduct> {
   @override
   void initState() {
     super.initState();
-    userID = "-1";
-    // // Access context in initState by using a post-frame callback
-    // WidgetsBinding.instance!.addPostFrameCallback((_) {
-    //   userID = Provider.of<UserProvider>(context, listen: false).userId ?? "-1";
-    // });
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
+      userID = Provider.of<UserProvider>(context, listen: false).userId ?? "-1";
+    });
   }
 
   @override

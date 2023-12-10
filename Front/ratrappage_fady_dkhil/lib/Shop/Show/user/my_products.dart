@@ -4,10 +4,8 @@ import 'dart:convert';
 
 import 'package:ratrappage_fady_dkhil/Shop/Show/user/my_products_details.dart';
 import 'package:ratrappage_fady_dkhil/Shop/Show/user/my_products_info.dart';
-// import '../../user_provider.dart';
-// import 'package:provider/provider.dart';
-// import 'package:projet_camping_evenement/events/ShowEvents/my_events_details.dart';
-// import 'package:projet_camping_evenement/events/ShowEvents/my_events_info.dart';
+import '../../../user_provider.dart';
+import 'package:provider/provider.dart';
 
 class MyProducts extends StatefulWidget {
   const MyProducts({super.key});
@@ -70,6 +68,9 @@ class _MyProductsState extends State<MyProducts> {
   @override
   void initState() {
     _fetchedProducts = fetchProducts();
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
+      userID = Provider.of<UserProvider>(context, listen: false).userId ?? "-1";
+    });
     super.initState();
   }
 
@@ -77,7 +78,6 @@ class _MyProductsState extends State<MyProducts> {
   Widget build(BuildContext context) {
     // Access context here in the build method
     //userID = Provider.of<UserProvider>(context).userId ?? "";
-    userID = "-1";
     return Scaffold(
       appBar: AppBar(
         title: const Text("My Products"),

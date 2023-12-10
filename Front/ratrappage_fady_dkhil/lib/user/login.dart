@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-// import 'package:provider/provider.dart';
-// import '../user_provider.dart'; // Import your user_provider.dart file
+import 'package:provider/provider.dart';
+import '../user_provider.dart'; // Import your user_provider.dart file
 
 class LogIn extends StatefulWidget {
   const LogIn({Key? key});
@@ -35,11 +35,14 @@ class _LogInState extends State<LogIn> {
 
           if (user != null && user["password"] == _password) {
             // Store the user _id using the provider
-            // Provider.of<UserProvider>(context, listen: false)
-            //     .setUserId(user["_id"]);
+            // ignore: use_build_context_synchronously
+            Provider.of<UserProvider>(context, listen: false)
+                .setUserId(user["_id"]);
 
+            // ignore: use_build_context_synchronously
             Navigator.pushReplacementNamed(context, "/home");
           } else {
+            // ignore: use_build_context_synchronously
             showDialog(
               context: context,
               builder: (BuildContext context) {
@@ -51,6 +54,7 @@ class _LogInState extends State<LogIn> {
             );
           }
         } else {
+          // ignore: use_build_context_synchronously
           showDialog(
             context: context,
             builder: (BuildContext context) {
@@ -63,6 +67,7 @@ class _LogInState extends State<LogIn> {
           );
         }
       } else {
+        // ignore: use_build_context_synchronously
         showDialog(
           context: context,
           builder: (BuildContext context) {
@@ -74,6 +79,7 @@ class _LogInState extends State<LogIn> {
         );
       }
     } catch (error) {
+      // ignore: use_build_context_synchronously
       showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -95,9 +101,16 @@ class _LogInState extends State<LogIn> {
       body: Form(
         key: _formKey,
         child: Column(children: [
-          const SizedBox(
-            height: 150,
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Image.asset(
+              '../assets/logo.png', // Replace with your logo asset path
+              width: 200,
+              height: 150,
+              // Adjust width and height as needed
+            ),
           ),
+          const SizedBox(height: 20),
           Container(
             margin: const EdgeInsets.fromLTRB(20, 2, 20, 30),
             child: TextFormField(
@@ -142,7 +155,6 @@ class _LogInState extends State<LogIn> {
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
                     _formKey.currentState!.save();
-                    //Navigator.pushReplacementNamed(context, "/home");
                     _login(context);
                   } else {
                     showDialog(

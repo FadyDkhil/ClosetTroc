@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 // import 'package:http/http.dart' as http;
-// // import 'package:provider/provider.dart';
+import 'package:provider/provider.dart';
 // import 'dart:convert';
-// import '../../user_provider.dart';
+import '../../user_provider.dart';
 
 class BagDetails extends StatefulWidget {
   final String _name;
@@ -28,10 +28,10 @@ class _BagDetailsState extends State<BagDetails> {
   void initState() {
     // _currentQuantity = widget._quantity;
     super.initState();
-    userID = "-1";
-    // WidgetsBinding.instance!.addPostFrameCallback((_) {
-    //   userID = Provider.of<UserProvider>(context, listen: false).userId ?? "-1";
-    // });
+
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
+      userID = Provider.of<UserProvider>(context, listen: false).userId ?? "-1";
+    });
   }
 
   @override
@@ -75,11 +75,6 @@ class _BagDetailsState extends State<BagDetails> {
             margin: const EdgeInsets.fromLTRB(100, 0, 20, 50),
             child: Text("Size: ${widget._size}"),
           ),
-
-          // Container(
-          //   margin: const EdgeInsets.fromLTRB(20, 20, 20, 50),
-          //   child: Text("Exemplaire disponible: $_currentQuantity"),
-          // ),
         ],
       ),
     );
