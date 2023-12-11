@@ -37,7 +37,8 @@ class _ChangeBirthState extends State<ChangeBirth> {
       );
 
       if (response.statusCode == 200) {
-        print('Date of birth changed successfully');
+        _showDialog('Date of birth changed successfully');
+
         // Optionally, you can update your local state or trigger a rebuild
       } else {
         print('Failed to change date of birth: ${response.statusCode}');
@@ -47,6 +48,26 @@ class _ChangeBirthState extends State<ChangeBirth> {
       print('Error: $error');
       // Handle network or other errors
     }
+  }
+
+  void _showDialog(String message) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Change Password'),
+          content: Text(message),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override

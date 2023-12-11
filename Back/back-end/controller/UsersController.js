@@ -37,6 +37,41 @@ const getUserName = async (req, res) => {
         res.status(500).json({ error: 'Internal Server Error' });
     }
 };
+const getUserPass = async (req, res) => {
+    try {
+        const userId = req.params.userId;
+        const user = await User.findById(userId);
+
+        if (user) {
+            res.json({ userPass: user.password });
+        } else {
+            res.status(404).json({ error: 'User not found' });
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
+// //getPass
+// const getUserPass = async (req, res) => {
+//     try {
+//         // Assuming you have the user ID in the request params
+//         const userId = req.params.userId; // Replace with your actual way of getting the user ID
+
+//         // Query the database to get the user by ID
+//         const user = await User.findById(userId);
+
+//         if (user) {
+//             // Send the user's name as JSON response
+//             res.json({ userPass: user.password });
+//         } else {
+//             res.status(404).json({ error: 'User not found' });
+//         }
+//     } catch (error) {
+//         console.error(error); // Log the error to the console
+//         res.status(500).json({ error: 'Internal Server Error' });
+//     }
+// };
 const editUser = async (req,res) => {
     try{
         const {id:userID} = req.params
@@ -263,5 +298,6 @@ module.exports = {
     changeUserBirth,
     changeUserPassword,
     changeUserPhone,
-    changeUsername
+    changeUsername,
+    getUserPass
 };

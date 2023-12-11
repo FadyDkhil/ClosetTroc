@@ -11,11 +11,43 @@ class LogIn extends StatefulWidget {
   _LogInState createState() => _LogInState();
 }
 
-class _LogInState extends State<LogIn> {
+class _LogInState extends State<LogIn> with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<EdgeInsets> _logoAnimation;
+  late Animation<double> _opacityAnimation;
+
   String? _userName;
   String? _password;
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  bool _obscurePassword = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 1),
+    );
+
+    _logoAnimation = EdgeInsetsTween(
+      begin: const EdgeInsets.only(top: 200),
+      end: const EdgeInsets.only(top: 20),
+    ).animate(CurvedAnimation(
+      parent: _controller,
+      curve: Curves.easeOut,
+    ));
+
+    _opacityAnimation = Tween<double>(
+      begin: 0.0,
+      end: 1.0,
+    ).animate(CurvedAnimation(
+      parent: _controller,
+      curve: Curves.easeIn,
+    ));
+
+    _controller.forward();
+  }
 
   Future<void> _login(BuildContext context) async {
     try {
@@ -34,15 +66,11 @@ class _LogInState extends State<LogIn> {
           );
 
           if (user != null && user["password"] == _password) {
-            // Store the user _id using the provider
-            // ignore: use_build_context_synchronously
             Provider.of<UserProvider>(context, listen: false)
                 .setUserId(user["_id"]);
 
-            // ignore: use_build_context_synchronously
             Navigator.pushReplacementNamed(context, "/home");
           } else {
-            // ignore: use_build_context_synchronously
             showDialog(
               context: context,
               builder: (BuildContext context) {
@@ -54,7 +82,6 @@ class _LogInState extends State<LogIn> {
             );
           }
         } else {
-          // ignore: use_build_context_synchronously
           showDialog(
             context: context,
             builder: (BuildContext context) {
@@ -67,7 +94,6 @@ class _LogInState extends State<LogIn> {
           );
         }
       } else {
-        // ignore: use_build_context_synchronously
         showDialog(
           context: context,
           builder: (BuildContext context) {
@@ -79,7 +105,6 @@ class _LogInState extends State<LogIn> {
         );
       }
     } catch (error) {
-      // ignore: use_build_context_synchronously
       showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -98,93 +123,124 @@ class _LogInState extends State<LogIn> {
       appBar: AppBar(
         title: const Text("Log in"),
       ),
-      body: Form(
-        key: _formKey,
-        child: Column(children: [
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Image.asset(
-              '../assets/logo.png', // Replace with your logo asset path
-              width: 200,
-              height: 150,
-              // Adjust width and height as needed
-            ),
-          ),
-          const SizedBox(height: 20),
-          Container(
-            margin: const EdgeInsets.fromLTRB(20, 2, 20, 30),
-            child: TextFormField(
-              decoration: const InputDecoration(
-                  border: OutlineInputBorder(), labelText: "Username"),
-              onSaved: (String? newValue) {
-                _userName = newValue;
-              },
-              validator: (String? value) {
-                if (value!.isEmpty) {
-                  return "Username mustn't be empty";
-                } else {
-                  return null;
-                }
-              },
-            ),
-          ),
-          Container(
-            margin: const EdgeInsets.fromLTRB(20, 2, 20, 30),
-            child: TextFormField(
-              obscureText: true,
-              decoration: const InputDecoration(
-                  border: OutlineInputBorder(), labelText: "Password"),
-              onSaved: (String? newValue) {
-                _password = newValue;
-              },
-              validator: (String? value) {
-                if (value!.isEmpty) {
-                  return "Password mustn't be empty";
-                } else {
-                  return null;
-                }
-              },
-            ),
-          ),
-          Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-            SizedBox(
-              width: 460,
-              height: 40,
-              child: ElevatedButton(
-                child: const Text("Login"),
-                onPressed: () {
-                  if (_formKey.currentState!.validate()) {
-                    _formKey.currentState!.save();
-                    _login(context);
-                  } else {
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return const AlertDialog(
-                          title: Text("Error"),
-                          content: Text("An error occurred"),
-                        );
+      body: AnimatedBuilder(
+        animation: _controller,
+        builder: (BuildContext context, Widget? child) {
+          return Form(
+            key: _formKey,
+            child: Column(
+              children: [
+                Padding(
+                  padding: _logoAnimation.value,
+                  child: Image.asset(
+                    '../assets/logo.png',
+                    width: 200,
+                    height: 150,
+                  ),
+                ),
+                const SizedBox(height: 20),
+                AnimatedOpacity(
+                  duration: const Duration(seconds: 1),
+                  opacity: _opacityAnimation.value,
+                  child: Container(
+                    margin: const EdgeInsets.fromLTRB(20, 2, 20, 30),
+                    child: TextFormField(
+                      decoration: const InputDecoration(
+                          border: OutlineInputBorder(), labelText: "Username"),
+                      onSaved: (String? newValue) {
+                        _userName = newValue;
                       },
-                    );
-                  }
-                },
-              ),
+                      validator: (String? value) {
+                        if (value!.isEmpty) {
+                          return "Username mustn't be empty";
+                        } else {
+                          return null;
+                        }
+                      },
+                    ),
+                  ),
+                ),
+                AnimatedOpacity(
+                  duration: const Duration(seconds: 1),
+                  opacity: _opacityAnimation.value,
+                  child: Container(
+                    margin: const EdgeInsets.fromLTRB(20, 2, 20, 30),
+                    child: TextFormField(
+                      obscureText: _obscurePassword,
+                      decoration: InputDecoration(
+                        border: const OutlineInputBorder(),
+                        labelText: "Password",
+                        suffixIcon: IconButton(
+                          icon: Icon(
+                            _obscurePassword
+                                ? Icons.visibility
+                                : Icons.visibility_off,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              _obscurePassword = !_obscurePassword;
+                            });
+                          },
+                        ),
+                      ),
+                      onSaved: (String? newValue) {
+                        _password = newValue;
+                      },
+                      validator: (String? value) {
+                        if (value!.isEmpty) {
+                          return "Password mustn't be empty";
+                        } else {
+                          return null;
+                        }
+                      },
+                    ),
+                  ),
+                ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      width: 460,
+                      height: 40,
+                      child: ElevatedButton(
+                        child: const Text("Login"),
+                        onPressed: () {
+                          if (_formKey.currentState!.validate()) {
+                            _formKey.currentState!.save();
+                            _login(context);
+                          } else {
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return const AlertDialog(
+                                  title: Text("Error"),
+                                  content: Text("An error occurred"),
+                                );
+                              },
+                            );
+                          }
+                        },
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    SizedBox(
+                      width: 460,
+                      height: 40,
+                      child: OutlinedButton(
+                        onPressed: () {
+                          Navigator.pushNamed(context, "/signup");
+                        },
+                        child: const Text("Sign Up"),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
             ),
-            const SizedBox(
-              height: 20,
-            ),
-            SizedBox(
-              width: 460,
-              height: 40,
-              child: OutlinedButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, "/signup");
-                },
-                child: const Text("Sign Up"),
-              ),
-            ),
-          ])
-        ]),
+          );
+        },
       ),
     );
   }

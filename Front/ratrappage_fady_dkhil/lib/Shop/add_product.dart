@@ -23,9 +23,6 @@ class _AddProductState extends State<AddProduct> {
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  // DateTime? _selectedStartDate;
-  // DateTime? _selectedEndDate;
-
   @override
   void initState() {
     super.initState();
@@ -34,43 +31,11 @@ class _AddProductState extends State<AddProduct> {
     });
   }
 
-  // Future<void> _selectStartDate(BuildContext context) async {
-  //   final DateTime? pickedStartDate = await showDatePicker(
-  //     context: context,
-  //     initialDate: DateTime.now(),
-  //     firstDate: DateTime.now(),
-  //     lastDate: DateTime(2101),
-  //   );
-
-  //   if (pickedStartDate != null && pickedStartDate != _selectedStartDate) {
-  //     setState(() {
-  //       _selectedStartDate = pickedStartDate;
-  //       _startDate = pickedStartDate.toLocal().toString().split(' ')[0];
-  //     });
-  //   }
-  // }
-
-  // Future<void> _selectEndDate(BuildContext context) async {
-  //   final DateTime? pickedEndDate = await showDatePicker(
-  //     context: context,
-  //     initialDate: DateTime.now(),
-  //     firstDate: DateTime.now(),
-  //     lastDate: DateTime(2101),
-  //   );
-
-  //   if (pickedEndDate != null && pickedEndDate != _selectedEndDate) {
-  //     setState(() {
-  //       _selectedEndDate = pickedEndDate;
-  //       _endDate = pickedEndDate.toLocal().toString().split(' ')[0];
-  //     });
-  //   }
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Add Event"),
+        title: const Text("Add Product"),
       ),
       body: Form(
         key: _formKey,
@@ -100,16 +65,32 @@ class _AddProductState extends State<AddProduct> {
             ),
             Container(
               margin: const EdgeInsets.fromLTRB(20, 0, 20, 20),
-              child: TextFormField(
+              child: DropdownButtonFormField<String>(
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: "Type",
                 ),
-                onSaved: (String? newValue) {
-                  _type = newValue;
+                value: _type,
+                onChanged: (String? newValue) {
+                  setState(() {
+                    _type = newValue;
+                  });
                 },
+                items: [
+                  "T-Shirt",
+                  "Coat",
+                  "Boots",
+                  "Sneakers",
+                  "Accessories",
+                  "Pants",
+                ].map<DropdownMenuItem<String>>((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
                 validator: (String? value) {
-                  if (value!.isEmpty) {
+                  if (value == null || value.isEmpty) {
                     return "You must choose a type";
                   } else {
                     return null;
@@ -194,34 +175,6 @@ class _AddProductState extends State<AddProduct> {
                 },
               ),
             ),
-
-            // Container(
-            //   margin: const EdgeInsets.fromLTRB(20, 0, 20, 20),
-            //   child: GestureDetector(
-            //     onTap: () => _selectEndDate(context),
-            //     child: AbsorbPointer(
-            //       child: TextFormField(
-            //         decoration: const InputDecoration(
-            //           border: OutlineInputBorder(),
-            //           labelText: "End Date",
-            //         ),
-            //         controller: TextEditingController(
-            //           text: _selectedEndDate != null
-            //               ? _selectedEndDate!.toLocal().toString().split(' ')[0]
-            //               : "",
-            //         ),
-            //         validator: (String? value) {
-            //           if (value!.isEmpty) {
-            //             return "Date mustn't be empty";
-            //           } else {
-            //             return null;
-            //           }
-            //         },
-            //       ),
-            //     ),
-            //   ),
-            // ),
-
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

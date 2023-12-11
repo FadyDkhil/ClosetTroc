@@ -78,27 +78,28 @@ class _ProductsState extends State<Products> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Text("Filter: "),
-              Radio(
-                value: SearchCriteria.byType,
-                groupValue: selectedSearchCriteria,
-                onChanged: (SearchCriteria? value) {
+              const Text("Filter by: "),
+              DropdownButton<String>(
+                value: selectedSearchCriteria.toString(),
+                onChanged: (String? value) {
                   setState(() {
-                    selectedSearchCriteria = value!;
+                    selectedSearchCriteria =
+                        value == SearchCriteria.byType.toString()
+                            ? SearchCriteria.byType
+                            : SearchCriteria.byName;
                   });
                 },
+                items: [
+                  DropdownMenuItem<String>(
+                    value: SearchCriteria.byType.toString(),
+                    child: const Text('Type'),
+                  ),
+                  DropdownMenuItem<String>(
+                    value: SearchCriteria.byName.toString(),
+                    child: const Text('Name'),
+                  ),
+                ],
               ),
-              const Text('Type'),
-              Radio(
-                value: SearchCriteria.byName,
-                groupValue: selectedSearchCriteria,
-                onChanged: (SearchCriteria? value) {
-                  setState(() {
-                    selectedSearchCriteria = value!;
-                  });
-                },
-              ),
-              const Text('Name'),
             ],
           ),
           Padding(

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import '../../user_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import '../../user_provider.dart';
+import 'package:provider/provider.dart';
 
 class ChangePhone extends StatefulWidget {
   const ChangePhone({Key? key}) : super(key: key);
@@ -14,6 +15,7 @@ class ChangePhone extends StatefulWidget {
 
 class _ChangePhoneState extends State<ChangePhone> {
   final TextEditingController _phoneController = TextEditingController();
+  String _selectedCountryCode = '+216'; // Default country code
   late String userID;
 
   @override
@@ -37,7 +39,7 @@ class _ChangePhoneState extends State<ChangePhone> {
       );
 
       if (response.statusCode == 200) {
-        print('Phone number changed successfully');
+        _showDialog('Phone number changed successfully');
         // Optionally, you can update your local state or trigger a rebuild
       } else {
         print('Failed to change phone number: ${response.statusCode}');
@@ -47,6 +49,26 @@ class _ChangePhoneState extends State<ChangePhone> {
       print('Error: $error');
       // Handle network or other errors
     }
+  }
+
+  void _showDialog(String message) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Change Password'),
+          content: Text(message),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
@@ -61,14 +83,39 @@ class _ChangePhoneState extends State<ChangePhone> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SizedBox(
-                width: 200, // Adjust the width as needed
-                child: TextField(
-                  controller: _phoneController,
-                  decoration: const InputDecoration(
-                    hintText: 'New phone number',
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    width: 150,
+                    margin: const EdgeInsets.fromLTRB(0, 0, 10, 0),
+                    child: DropdownButton<String>(
+                      value: _selectedCountryCode,
+                      onChanged: (String? newValue) {
+                        setState(() {
+                          _selectedCountryCode = newValue!;
+                        });
+                      },
+                      items: <String>['+216 (Tunisia)', '+377 (Lithuania)']
+                          .map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value
+                              .split(' ')[0], // Extracting the country code
+                          child: Text(value),
+                        );
+                      }).toList(),
+                    ),
                   ),
-                ),
+                  SizedBox(
+                    width: 200, // Adjust the width as needed
+                    child: TextField(
+                      controller: _phoneController,
+                      decoration: const InputDecoration(
+                        hintText: 'New phone number',
+                      ),
+                    ),
+                  ),
+                ],
               ),
               const SizedBox(
                   height: 16), // Adjust the height between input and button
@@ -77,7 +124,8 @@ class _ChangePhoneState extends State<ChangePhone> {
                 child: ElevatedButton(
                   onPressed: () {
                     // Add your 'Change' button logic here
-                    final newPhoneNumber = _phoneController.text;
+                    final newPhoneNumber =
+                        '$_selectedCountryCode ${_phoneController.text}';
                     print(
                         'Change button pressed with phone number: $newPhoneNumber');
                     _changePhone(newPhoneNumber);

@@ -37,7 +37,7 @@ class _ChangeEmailState extends State<ChangeEmail> {
       );
 
       if (response.statusCode == 200) {
-        print('Email changed successfully');
+        _showDialog('Email changed successfully');
         // Optionally, you can update your local state or trigger a rebuild
       } else {
         print('Failed to change email: ${response.statusCode}');
@@ -47,6 +47,26 @@ class _ChangeEmailState extends State<ChangeEmail> {
       print('Error: $error');
       // Handle network or other errors
     }
+  }
+
+  void _showDialog(String message) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Change Password'),
+          content: Text(message),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
